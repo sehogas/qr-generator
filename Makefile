@@ -8,7 +8,7 @@ stop:
 	docker stop qr-generator
 
 start:
-	docker start qr-generator
+	docker start -a qr-generator
 
 remove:
 	docker rm qr-generator
