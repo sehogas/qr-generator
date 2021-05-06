@@ -1,0 +1,14 @@
+[Unit]
+Description=QR Generator
+After=docker.service
+Wants=network-online.target docker.socket
+Requires=docker.socket
+ 
+[Service]
+Restart=always
+ExecStartPre=/bin/bash -c "/usr/bin/docker container inspect qr-generator 2> /dev/null || /usr/bin/docker run -d --name qr-generator -p 8080:8080 qr-generator:1.0"
+ExecStart=/usr/bin/docker start -a qr-generator
+ExecStop=/usr/bin/docker stop -t 10 qr-generator
+ 
+[Install]
+WantedBy=multi-user.target
