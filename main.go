@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 
 	"github.com/boombuler/barcode"
@@ -13,8 +14,15 @@ import (
 )
 
 func main() {
+
+	var port = os.Getenv("PORT")
+	if port == "" {
+		log.Fatal("PORT environment variable missing")
+	}
+	port = ":" + port
+
 	http.HandleFunc("/", QrGeneratorHandler)
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(port, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}

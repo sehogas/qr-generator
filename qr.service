@@ -1,0 +1,12 @@
+[Unit]
+Description=qr
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5s
+Environment=PORT=8080
+ExecStart=/home/shogas/go/bin/qr-generator
+
+[Install]
+WantedBy=multi-user.target
