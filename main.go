@@ -15,14 +15,14 @@ import (
 
 func main() {
 
-	var port = os.Getenv("PORT")
-	if port == "" {
-		log.Fatal("PORT environment variable missing")
+	var PORT = os.Getenv("PORT")
+	if PORT == "" {
+		PORT = "8080"
 	}
-	port = ":" + port
+	PORT = ":" + PORT
 
 	http.HandleFunc("/", QrGeneratorHandler)
-	err := http.ListenAndServe(port, nil)
+	err := http.ListenAndServe(PORT, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}

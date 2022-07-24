@@ -1,25 +1,40 @@
-run:
-	PORT=8080 go run main.go
+########################################################
+override TARGET=qr-generator
+VERSION=1.1
+OS=linux
+ARCH=amd64
+FLAGS="-s -w"
+CGO=0
+########################################################
 
-build:
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o qr-generator .
+run:
+	@echo Ejecutando programa ...
+	go run main.go
+
+bin:
+	@echo Generando binario ...
+	CGO_ENABLED=$(CGO) GOOS=$(OS) GOARCH=$(ARCH) go build -ldflags=$(FLAGS) -o $(TARGET) .
 
 install: 
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go install -ldflags="-s -w" 
+	@echo Instalando binario binario ...
+	CGO_ENABLED=$(CGO) GOOS=$(OS) GOARCH=$(ARCH) go install -ldflags=$(FLAGS) 
 
-dbuild:
-	docker build -t qr-generator:1.0 .
+build:
+	@echo Construyendo imagen docker $(TARGET):$(VERSION) ...
+	docker build -t $(TARGET):$(VERSION) .
+	docker tag $(TARGET):$(VERSION) $(TARGET):latest
 
-drun:
-	docker run -d --name qr-generator -p 8080:8080 qr-generator:1.0
+start:
+	@echo Ejecutando contenedor docker $(TARGET):$(VERSION) ...
+	docker run --rm -d --name $(TARGET) -p 8080:8080 $(TARGET):latest
 
-dstop:
-	docker stop qr-generator
+stop:
+	docker stop $(TARGET)
 
-dstart:
-	docker start -a qr-generator
+clean:
+	@echo Borrando binario ...
+	rm -rf $(TARGET)
 
-dremove:
-	docker rm qr-generator
-
-.PHONY: run build install dbuild drun dstop dstart dremove
+.PHONY: clean run install build start stop
+.DEFAULT: 
+	@echo 'No hay disponible ninguna regla para este destino'

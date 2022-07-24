@@ -1,0 +1,1 @@
+{"buildTargets":["build","dbuild","dremove","drun","dstart","dstop","install","make","run"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}
