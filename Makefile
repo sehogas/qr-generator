@@ -8,7 +8,7 @@ CGO=0
 ########################################################
 
 run:
-	@echo Ejecutando programa ...
+	@echo Ejecutando programa...
 	go run main.go
 
 bin:
