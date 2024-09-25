@@ -1,6 +1,6 @@
 ########################################################
 override TARGET=qr-generator
-VERSION=1.1
+VERSION=1.2
 OS=linux
 ARCH=amd64
 FLAGS="-s -w"

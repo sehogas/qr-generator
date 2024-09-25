@@ -1,6 +1,6 @@
 # ./Dockerfile
 
-FROM golang:1.18.4-alpine3.15 AS builder
+FROM golang:alpine AS builder
 
 # Move to working directory (/build).
 WORKDIR /build
