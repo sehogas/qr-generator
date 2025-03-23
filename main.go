@@ -22,6 +22,9 @@ func main() {
 	PORT = ":" + PORT
 
 	http.HandleFunc("/", QrGeneratorHandler)
+	http.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("pong"))
+	})
 	err := http.ListenAndServe(PORT, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
