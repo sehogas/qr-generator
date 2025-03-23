@@ -1,30 +1,22 @@
-# ./Dockerfile
+FROM alpine:3.21.3 AS root-certs
+RUN apk add -U --no-cache ca-certificates
+RUN addgroup -g 1001 app
+RUN adduser app -u 1001 -D -G app 
 
-FROM golang:alpine AS builder
-
-# Move to working directory (/build).
+FROM golang:1.24.1-alpine AS builder
 WORKDIR /build
-
-# Copy and download dependency using go mod.
+COPY --from=root-certs /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs
 COPY go.mod go.sum ./
 RUN go mod download
-
-# Copy the code into the container.
 COPY . .
-
-# Set necessary environment variables needed for our image 
-# and build the API server.
 ENV CGO_ENABLED=0 GOOS=linux GOARCH=amd64
-RUN go build -ldflags="-s -w" -o qr-generator .
+RUN go build -ldflags="-s -w" --mod=vendor -o qr-generator .
 
 FROM scratch
-
-# Copy binary and config files from /build 
-# to root folder of scratch container.
-COPY --from=builder ["/build/qr-generator", "/"]
-
-# Export necessary port.
+COPY --from=root-certs /etc/passwd /etc/passwd
+COPY --from=root-certs /etc/group /etc/group
+COPY --chown=1001:1001 --from=root-certs /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY --chown=1001:1001 --from=builder /build/qr-generator /
+USER app
 EXPOSE 8080
-
-# Command to run when starting the container.
 ENTRYPOINT ["/qr-generator"]

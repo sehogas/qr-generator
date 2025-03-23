@@ -7,25 +7,26 @@ FLAGS="-s -w"
 CGO=0
 ########################################################
 
+up:
+	docker compose --file docker-compose.yml up -d --remove-orphans --build
+
+down:
+	docker compose --file docker-compose.yml down
+
 run:
-	@echo Ejecutando programa...
 	go run main.go
 
 bin:
-	@echo Generando binario ...
 	CGO_ENABLED=$(CGO) GOOS=$(OS) GOARCH=$(ARCH) go build -ldflags=$(FLAGS) -o $(TARGET) .
 
 install: 
-	@echo Instalando binario binario ...
 	CGO_ENABLED=$(CGO) GOOS=$(OS) GOARCH=$(ARCH) go install -ldflags=$(FLAGS) 
 
 build:
-	@echo Construyendo imagen docker $(TARGET):$(VERSION) ...
 	docker build -t $(TARGET):$(VERSION) .
 	docker tag $(TARGET):$(VERSION) $(TARGET):latest
 
 start:
-	@echo Ejecutando contenedor docker $(TARGET):$(VERSION) ...
 	docker run --rm -d --name $(TARGET) -p 8080:8080 $(TARGET):latest
 
 stop:

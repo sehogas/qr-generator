@@ -29,14 +29,6 @@ sudo cp qr-generator.service /etc/systemd/system/
 
 sudo cp qr.service /etc/systemd/system/
 
-# Comandos systemd
-
-sudo systemctl start qr
-sudo systemctl start qr
-sudo systemctl enable qr
-sudo systemctl disable qr
-sudo systemctl status qr
-
 ## Referencias
 * Barcode Library: https://github.com/boombuler/barcode
 
