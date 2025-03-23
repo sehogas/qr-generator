@@ -8,7 +8,7 @@ CGO=0
 ########################################################
 
 up:
-	docker compose --file docker-compose.yml up -d --remove-orphans --build
+	docker compose --file docker-compose.yml up -d --build
 
 down:
 	docker compose --file docker-compose.yml down

@@ -1,36 +1,30 @@
-# Generador de códigos QR 
+# QR generator
 
-Este servicio web devuelve imagen qr generada a partir del string pasado en la URL.
+This API returns a QR image generated from the string passed in the URL.
 
-Los parámetros son:
-* ```data```: (Requerido) La cadena (codificada en URL) que debe codificarse en el código QR
+Parameters:
+* ```data```: (Required) The string (encoded URL) that will contain the QR code
 * ```size```: (Opcional) El tamaño de la imagen (predeterminado: 250)
 
-Ejemplo. ```http://localhost:8080/?data=Hello%2C%20world&size=300```
+URL Encoding: 
+    ```https://www.w3schools.com/tags/ref_urlencode.ASP```
 
-## Instalación
+Example:
+    ```http://localhost:8080/?data=Hello%2C%20world&size=300```
 
-Descargue el código fuente e instálelo usando el comando `make install`.
+## Testing using Makefile
 
-Alternativamente, use Docker para ejecutar el servicio en un contenedor:
-
+Start service:
 ```
-docker build -t qr-generator:1.0 .
+$ make up
 ```
+Stop service:
 ```
-docker run -d --name qr-generator -p 8080:8080 qr-generator:1.0
+$ make down
 ```
 
-## Instalar en systemd como contenedor docker
-
-sudo cp qr-generator.service /etc/systemd/system/
-
-## Instalar en systemd como binario
-
-sudo cp qr.service /etc/systemd/system/
-
-## Referencias
+## References and credits
 * Barcode Library: https://github.com/boombuler/barcode
 
-## Autor
+## Author
 * [Sebastian Hogas](https://github.com/sehogas)
