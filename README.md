@@ -23,6 +23,15 @@ Stop service:
 $ make down
 ```
 
+## Example of push release
+```
+$ git add .
+$ git commit -m "fist release"
+$ git tag -a v1.0.0 -m "first release"
+$ git push origin v1.0.0
+``` 
+
+
 ## References and credits
 * Barcode Library: https://github.com/boombuler/barcode
 

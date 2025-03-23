@@ -33,9 +33,6 @@ stop:
 	docker stop $(TARGET)
 
 clean:
-	@echo Borrando binario ...
 	rm -rf $(TARGET)
 
-.PHONY: clean run install build start stop
-.DEFAULT: 
-	@echo 'No hay disponible ninguna regla para este destino'
+.PHONY: up down run bin install build start stop clean
