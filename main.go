@@ -23,7 +23,7 @@ func main() {
 
 	var PING_RESPONSE = os.Getenv("QR_GENERATOR_PING_RESPONSE")
 	if PING_RESPONSE == "" {
-		PING_RESPONSE = "pongooo"
+		PING_RESPONSE = "pong"
 	}
 
 	http.HandleFunc("/", QrGeneratorHandler)
