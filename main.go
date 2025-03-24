@@ -21,9 +21,14 @@ func main() {
 	}
 	PORT = ":" + PORT
 
+	var PING_RESPONSE = os.Getenv("QR_GENERATOR_PING_RESPONSE")
+	if PING_RESPONSE == "" {
+		PING_RESPONSE = "pong"
+	}
+
 	http.HandleFunc("/", QrGeneratorHandler)
 	http.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("pong"))
+		w.Write([]byte(PING_RESPONSE))
 	})
 	err := http.ListenAndServe(PORT, nil)
 	if err != nil {
